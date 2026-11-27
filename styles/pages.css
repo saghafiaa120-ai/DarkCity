@@ -1,0 +1,191 @@
+/* ==================================================================
+   استایل صفحه‌ها — خانه، امضای کارت، بازی، پایان
+================================================================== */
+
+/* ---------------------------------- home ---------------------------------- */
+.home-actions { display: flex; flex-direction: column; gap: 9px; margin-top: 20px; }
+.home-note {
+  margin: 16px auto 0; max-width: 34ch; text-align: center;
+  font-size: 10.5px; line-height: 1.95; color: var(--muted);
+}
+
+/* ---------------------------------- deal ---------------------------------- */
+#screen-deal.active { justify-content: space-between; }
+
+.deal-head { display: flex; align-items: center; gap: 10px; }
+.progress { flex: 1; height: 5px; border-radius: 99px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #5ad1ff, #ff3b5c); transition: width .4s ease; }
+.deal-counter { font-size: 10.5px; color: var(--muted); min-width: 46px; text-align: end; font-variant-numeric: tabular-nums; }
+
+.deal-stage { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 4px 0; }
+.deal-hint { margin: 0; text-align: center; font-size: 13px; color: var(--muted); line-height: 1.8; }
+.deal-hint b { display: block; font-size: 21px; color: var(--text); font-weight: 900; letter-spacing: -.01em; }
+.deal-hint span { display: block; margin-top: 2px; font-size: 10px; opacity: .65; }
+
+.flip-card {
+  width: min(332px, 86vw); aspect-ratio: .70;
+  perspective: 1500px; cursor: pointer; touch-action: manipulation;
+  animation: floaty 7s ease-in-out infinite;
+}
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.flip-inner {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .62s cubic-bezier(.3, 1.15, .4, 1);
+}
+.flip-card.revealed .flip-inner { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute; inset: 0; padding: 24px 21px;
+  display: flex; flex-direction: column; align-items: center;
+  border-radius: 28px; overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .13);
+  box-shadow: 0 36px 70px -32px #000, inset 0 1px 0 rgba(255, 255, 255, .13);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+/* ------------------------------ card back -------------------------------- */
+.card-back {
+  justify-content: center; gap: 14px; color: #d6defe;
+  background: radial-gradient(120% 90% at 50% 0%, #1b2244 0%, #0a0d18 62%, #05070f 100%);
+}
+.card-back::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(75% 55% at 50% 32%, rgba(255, 59, 92, .3), transparent 68%);
+}
+.card-back-pattern {
+  position: absolute; inset: 9px; border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .038) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, .038) 0 1px, transparent 1px 9px);
+}
+.card-back-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.card-back-inner img {
+  width: 66%; height: auto; max-height: 76%; object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(255, 59, 92, .55));
+}
+.card-back-inner span {
+  font-size: 12px; font-weight: 800; letter-spacing: .42em;
+  color: var(--gold);
+}
+.card-back-sweep {
+  position: absolute; inset: 0; z-index: 3;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .14) 50%, transparent 62%);
+  transform: translateX(-120%);
+  animation: sweep 4.2s ease-in-out infinite;
+}
+@keyframes sweep { 0%, 55% { transform: translateX(-120%); } 88%, 100% { transform: translateX(120%); } }
+
+/* ------------------------------ card front ------------------------------- */
+.card-front {
+  transform: rotateY(180deg);
+  justify-content: center; gap: 10px; text-align: center;
+  background: linear-gradient(165deg, rgba(255, 255, 255, .1), rgba(9, 12, 24, .97) 58%);
+  --c: #5ad1ff; --cs: rgba(90, 209, 255, .16);
+}
+.card-front::before {
+  content: ""; position: absolute; top: -35%; left: -35%; right: -35%; height: 75%;
+  background: radial-gradient(50% 60% at 50% 0%, var(--cs), transparent 72%);
+}
+
+.chip {
+  position: relative; z-index: 2; font-size: 10.5px; font-weight: 800;
+  letter-spacing: .06em; padding: 4px 12px; border-radius: 99px;
+  background: var(--cs); color: var(--c); border: 1px solid var(--cs);
+}
+
+.card-icon-wrap {
+  position: relative; z-index: 2; width: 82px; height: 82px; border-radius: 25px;
+  display: grid; place-items: center;
+  background: var(--cs); color: var(--c); border: 1px solid var(--cs);
+  box-shadow: 0 0 42px -8px var(--c), inset 0 1px 0 rgba(255, 255, 255, .14);
+}
+.card-icon-wrap svg { width: 40px; height: 40px; }
+
+.card-name {
+  position: relative; z-index: 2; margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: 29px; font-weight: 900; line-height: 1.28; letter-spacing: -.015em;
+  text-shadow: 0 6px 26px rgba(0, 0, 0, .5);
+}
+
+.card-desc {
+  position: relative; z-index: 2; margin: 0; padding: 0 2px;
+  font-size: 13px; font-weight: 450; line-height: 2.05; letter-spacing: .002em;
+  color: #ccd3e9;
+}
+
+.card-night {
+  position: relative; z-index: 2; margin-top: auto; width: 100%;
+  padding: 10px 12px; border-radius: 14px; text-align: start;
+  font-size: 11.5px; line-height: 1.95; color: #dfe5f7;
+  background: rgba(0, 0, 0, .38); border: 1px dashed var(--cs);
+}
+.card-night b {
+  display: block; margin-bottom: 3px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: .07em; color: var(--gold);
+}
+
+.deal-tap { margin: 0; height: 16px; font-size: 10.5px; color: var(--muted); transition: opacity .25s; }
+.deal-tap.hidden { opacity: 0; }
+
+/* ---------------------------------- game ---------------------------------- */
+.game-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+.phase-pill {
+  font-size: 13px; font-weight: 900; padding: 6px 14px; border-radius: 99px; border: 1px solid;
+  transition: color .3s, border-color .3s, background .3s, box-shadow .3s;
+}
+.phase-pill.night {
+  color: #b9c6ff; border-color: rgba(120, 150, 255, .42);
+  background: rgba(90, 120, 255, .16); box-shadow: 0 0 26px -8px #4d6bff;
+}
+.phase-pill.day {
+  color: #ffd68f; border-color: rgba(233, 194, 106, .45);
+  background: rgba(233, 194, 106, .15); box-shadow: 0 0 26px -8px #e9c26a;
+}
+
+.timer-wrap { display: flex; align-items: center; gap: 7px; }
+.timer-wrap[hidden] { display: none; }
+.timer-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--stroke); background: rgba(255, 255, 255, .06);
+  color: var(--text); display: grid; place-items: center; cursor: pointer;
+}
+.timer-btn svg { width: 12px; height: 12px; }
+.timer-btn.is-running {
+  color: var(--gold); border-color: rgba(233, 194, 106, .42);
+  background: rgba(233, 194, 106, .14);
+}
+.timer { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 60px; }
+.timer span { font-size: 13.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.timer-bar { width: 100%; height: 3px; border-radius: 99px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+.timer-bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #5ad1ff, #b487ff); transition: width 1s linear; }
+
+/* ---------------------------------- end ----------------------------------- */
+.end-panel { text-align: center; }
+.end-reason {
+  margin: 0; font-size: 16px; font-weight: 900; line-height: 1.85; color: var(--gold);
+}
+.end-meta { margin: 6px 0 0; font-size: 10.5px; color: var(--muted); }
+
+/* -------------------------------- utilities ------------------------------- */
+@media (max-height: 720px) {
+  .flip-card { width: min(272px, 74vw); animation: none; }
+  .deal-hint b { font-size: 17px; }
+  .deal-hint span { display: none; }
+  .deal-stage { gap: 9px; }
+  .deal-tap { height: 12px; font-size: 9.5px; }
+}
+
+@media (max-width: 360px) {
+  .hero-title { font-size: 38px; }
+  .hero-logo { width: 104px; height: 104px; }
+  .card-name { font-size: 25px; }
+  .card-desc { font-size: 11.5px; }
+  .card-face { padding: 18px 16px; }
+  .name-list { grid-template-columns: 1fr; }
+  .stage-title { font-size: 19px; }
+}
